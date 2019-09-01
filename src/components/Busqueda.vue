@@ -8,12 +8,14 @@
                 </div>
             </div>
         </form>
+        {{ $data }}
+
     </div>
 </template>
 
 <script>
 export default {
-    name:'busqueda'
+    name:'busqueda',
 }
 </script>
 
