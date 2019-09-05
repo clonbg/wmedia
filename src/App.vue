@@ -1,29 +1,31 @@
 <template>
   <div id="app">
     <Busqueda></Busqueda>
-    <hr/>
+    <hr />
     <Usuarios></Usuarios>
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import Usuarios from './components/Usuarios.vue'
-import Busqueda from './components/Busqueda.vue'
+import Usuarios from "./components/Usuarios.vue";
+import Busqueda from "./components/Busqueda.vue";
+import { store } from "./store/store";
 
 export default {
-  name: 'app',
+  name: "app",
+  store,
   components: {
     // HelloWorld
     Usuarios,
     Busqueda
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

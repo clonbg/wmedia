@@ -2,9 +2,16 @@
   <div id="busqueda">
     <form>
       <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-5 col-form-label">Email</label>
+        <label for="inputEmail3" class="col-sm-5 col-form-label">Nombre</label>
         <div class="col-sm-5">
-          <input type="email" @keyup="addBusqueda" v-model="stringBuscar" class="form-control" id="inputEmail3" placeholder="Email" />
+          <input
+            type="text"
+            class="form-control"
+            id="inputEmail3"
+            placeholder="Nombre"
+            v-model="buscar"
+            @input="update"
+          />
         </div>
       </div>
     </form>
@@ -12,17 +19,15 @@
 </template>
 
 <script>
-import EventBus from "../bus";
 export default {
-  name: "busqueda",
   data() {
     return {
-      stringBuscar: ""
+      buscar: ""
     };
   },
   methods: {
-    addBusqueda: function() {
-      EventBus.$emit("add-busqueda", this.stringBuscar);
+    update() {
+      this.$store.state.busqueda = this.buscar;
     }
   }
 };

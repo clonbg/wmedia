@@ -1,14 +1,14 @@
 <template>
   <div id="usuarios">
     <ul>
-      <div v-for="user in users" :key="user.name.first">
+      <div v-for="user in usersFiltrado" :key="user.nombre">
         <div class="float-left card text-white bg-success mb-3 tamano-tarjetas">
           <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-            <div class="card-header">{{ user.name.title }}</div>
+            <div class="card-header">{{ user.title }}</div>
             <div class="card-body">
-              <h5 class="card-title">{{ user.name.first }} {{ user.name.last }}</h5>
+              <h5 class="card-title">{{ user.nombre }}</h5>
               <p class="card-text">
-                <img :src="user.picture.large" :alt="user.name.first" />>
+                <img :src="user.foto" :alt="user.nombre" />>
               </p>
               <div class="card-footer">
                 <small>{{ user.email }}</small>
@@ -23,33 +23,40 @@
 </template>
 
 <script>
-import EventBus from "../bus";
 import axios from "axios";
 export default {
   name: "usuarios",
   data() {
     return {
-      users: [],
-      buscar: ''
+      users: []
     };
   },
   computed: {
-    
-    update: function () {
-          return EventBus.$on('add-busqueda', (item) => {
-              console.log(item);
-              this.users.filter(user => {
-              return user.name.first.includes(item);
+    usersFiltrado() {
+      return this.users.filter(user => {
+        return user.nombre.toLowerCase().includes(this.$store.state.busqueda.toLowerCase());
       });
-          })
-      },
+    }
   },
   mounted() {
     axios
-      .get("https://randomuser.me/api/?results=50")
+      .get("https://randomuser.me/api/?results=500")
       .then(res => {
         //console.log(res.data.results);
-        this.users = res.data.results;
+        var usuarios = res.data.results.map(usuario => {
+          return {
+            title: usuario.name.title,
+            nombre:
+              usuario.name.first.charAt(0).toUpperCase() +
+              usuario.name.first.slice(1) +
+              " " +
+              usuario.name.last.charAt(0).toUpperCase() +
+              usuario.name.last.slice(1),
+            email: usuario.email,
+            foto: usuario.picture.medium
+          };
+        });
+        this.users = usuarios;
       })
       .catch(err => {
         console.error(err);
