@@ -28,7 +28,7 @@ export const store = new Vuex.Store({
     loadUsers({ commit }) {//para definir el commit
       //console.log('Works')
       axios
-        .get("https://randomuser.me/api/?results=500")
+        .get("https://randomuser.me/api/?results=50")
         .then(resp => {
           var usuarios = resp.data.results.map(usuario => {
             return {
